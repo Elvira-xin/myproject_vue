@@ -6,6 +6,11 @@ export default new VueRouter({
   routes: [
     {
       name: 'login',
+      path: '/',
+      redirect: 'login'
+    },
+    {
+      name: 'login',
       path: '/login',
       component: Login
     }
