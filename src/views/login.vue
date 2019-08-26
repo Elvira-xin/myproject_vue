@@ -11,13 +11,14 @@
         <el-input v-model="loginForm.password" placeholder="密码" prefix-icon="myicon-key"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" class="login-btn">登录</el-button>
+        <el-button type="primary" class="login-btn" @click="login">登录</el-button>
       </el-form-item>
     </el-form>
     </div>
   </div>
 </template>
 <script>
+import { login } from '@/api/login_index.js'
 export default {
   data () {
     return {
@@ -33,6 +34,30 @@ export default {
           { required: true, message: '请输入活动名称', trigger: 'blur' }
         ]
       }
+    }
+  },
+  methods: {
+    login () {
+      this.$refs.loginForm.validate((valid) => {
+        if (valid) {
+          // alert('ok')
+          console.log(this.loginForm)
+          login(this.loginForm)
+            .then((res) => {
+              console.log(res)
+              if (res.data.meta.status === 200) {
+                localStorage.setItem('itcast_manager', res.data.data.token)
+                this.$message.success(res.data.meta.msg)
+                this.$router.push({ name: 'home' })
+              } else {
+                this.$message.warning(res.data.meta.msg)
+              }
+            })
+            .catch(() => {
+              this.$message.error('登录失败')
+            })
+        }
+      })
     }
   }
 }
