@@ -46,7 +46,7 @@ export default {
             .then((res) => {
               console.log(res)
               if (res.data.meta.status === 200) {
-                localStorage.setItem('itcast_manager', res.data.data.token)
+                localStorage.setItem('myproject_vue', res.data.data.token)
                 this.$message.success(res.data.meta.msg)
                 this.$router.push({ name: 'home' })
               } else {
